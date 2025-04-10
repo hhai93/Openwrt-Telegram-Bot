@@ -2,6 +2,8 @@
 
 A lightweight Telegram bot to remotely monitor and control your OpenWRT-based router.
 
+---
+
 ## 🚀 Features
 
 - 📡 List connected devices (with MAC Vendor lookup)
@@ -11,12 +13,14 @@ A lightweight Telegram bot to remotely monitor and control your OpenWRT-based ro
 - 📶 Turn Wi-Fi on or off
 - ⚠️ Auto alert when unknown devices connect
 
+---
+
 ## 📦 Requirements
 
 - Python 3.9+
 - `python-telegram-bot >= 20.0`
 - `requests`, `nest_asyncio`
-
+---
 ## 🛠️ Setup
 
 1. Edit the following variables in the script:
@@ -33,6 +37,8 @@ python router_bot.py
 
 The bot needs access to system commands (`iptables`, `ping`, `wifi`, etc.), so make sure it's run with appropriate privileges.
 
+---
+
 ## 📚 Commands
 
 | Command        | Description                              |
@@ -46,10 +52,9 @@ The bot needs access to system commands (`iptables`, `ping`, `wifi`, etc.), so m
 | `/wifion`      | Turn Wi-Fi **on**                        |
 | `/wifioff`     | Turn Wi-Fi **off**                       |
 
+---
+
 ## 📢 Auto Alerts
 
 The bot checks for unknown devices every 5 minutes and notifies authorized users if any are online.
 
-## 📝 License
-
-MIT License
