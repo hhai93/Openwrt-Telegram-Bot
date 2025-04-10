@@ -170,6 +170,16 @@ async def reboot_wan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🔄 Restarting WAN interface...")
     execute_command("ifdown wan && ifup wan")
 
+@is_authorized
+async def wifi_on(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    execute_command("wifi up")
+    await update.message.reply_text("✅ Wi-Fi has been turned *on*.", parse_mode="Markdown")
+
+@is_authorized
+async def wifi_off(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    execute_command("wifi down")
+    await update.message.reply_text("🚫 Wi-Fi has been turned *off*.", parse_mode="Markdown")
+
 # ================= AUTO DEVICE CHECK =================
 async def check_unknown_devices(context: ContextTypes.DEFAULT_TYPE):
     static_leases = get_static_leases()
@@ -204,10 +214,12 @@ async def main():
     await app.bot.set_my_commands([
         BotCommand("status", "Check router status"),
         BotCommand("devices", "List connected devices"),
-        BotCommand("block", "Block a device from internet"),
-        BotCommand("unblock", "Unblock a device"),
+        BotCommand("block", "Block a MAC address"),
+        BotCommand("unblock", "Unblock a MAC address"),
         BotCommand("reboot", "Reboot the router"),
-        BotCommand("rebootwan", "Restart WAN interface"),
+        BotCommand("rebootwan", "Restart WAN connection"),
+        BotCommand("wifion", "Turn on Wi-Fi"),
+        BotCommand("wifioff", "Turn off Wi-Fi"),
     ])
 
     app.add_handler(CommandHandler("status", status))
@@ -216,6 +228,8 @@ async def main():
     app.add_handler(CommandHandler("unblock", unblock))
     app.add_handler(CommandHandler("reboot", reboot))
     app.add_handler(CommandHandler("rebootwan", reboot_wan))
+    app.add_handler(CommandHandler("wifion", wifi_on))
+    app.add_handler(CommandHandler("wifioff", wifi_off))
 
     setup_auto_check(app)
 
