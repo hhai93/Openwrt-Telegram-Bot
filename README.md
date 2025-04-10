@@ -1,5 +1,7 @@
 # Openwrt Telegram Bot
 
+![GitHub](https://img.shields.io/badge/license-MIT-blue.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/hhai93/Openwrt_Telegram_Bot)
+
 A lightweight Telegram bot to remotely monitor and control your OpenWRT-based router.
 
 ---
