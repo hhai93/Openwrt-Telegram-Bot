@@ -1,53 +1,55 @@
-# Telegram Bot for OpenWrt
-A Telegram bot to monitor and manage devices connected to your OpenWrt router. It can detect new devices, block/unblock internet access, reboot the router, and more — all via chat.
+# Openwrt Telegram Bot
 
----
+A lightweight Telegram bot to remotely monitor and control your OpenWRT-based router.
 
 ## 🚀 Features
-- Check router uptime, CPU, and memory usage
-- Show all connected devices with MAC vendors
-- Identify and notify about unknown devices (devices not listed in static leases)
-- Block or unblock internet access by MAC address
-- Reboot router or WAN interface
-- Automatically checks for new devices every 5 minutes
 
----
+- 📡 List connected devices (with MAC Vendor lookup)
+- 🧠 Show CPU, memory, and uptime stats
+- 🚫 Block or unblock internet access by MAC address
+- 🔁 Reboot router or restart WAN connection
+- 📶 Turn Wi-Fi on or off
+- ⚠️ Auto alert when unknown devices connect
 
-## 🛠️ Requirements
+## 📦 Requirements
 
 - Python 3.9+
-- A router running OpenWrt with access to system shell commands
+- `python-telegram-bot >= 20.0`
+- `requests`, `nest_asyncio`
 
----
+## 🛠️ Setup
 
-## 🔐 Configuration
+1. Edit the following variables in the script:
+```python
+TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+ALLOWED_USERS = [123456789]  # Telegram user IDs allowed to use the bot
+```
 
-Edit the following values:
-- TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
-- ALLOWED_USERS = [123456789] #Replace with your Telegram user ID(s) (chat with @userinfobot to get)
+2. Run the bot:
 
----
+```bash
+python router_bot.py
+```
 
-## ▶️ Running the Bot
-bash python router_bot.py
+The bot needs access to system commands (`iptables`, `ping`, `wifi`, etc.), so make sure it's run with appropriate privileges.
 
----
+## 📚 Commands
 
-## 💬 Available Commands
+| Command        | Description                              |
+|----------------|------------------------------------------|
+| `/status`      | Show router status                       |
+| `/devices`     | List connected devices                   |
+| `/block <MAC>` | Block internet access by MAC             |
+| `/unblock <MAC>` | Unblock internet access                |
+| `/reboot`      | Reboot the router                        |
+| `/rebootwan`   | Restart WAN connection                   |
+| `/wifion`      | Turn Wi-Fi **on**                        |
+| `/wifioff`     | Turn Wi-Fi **off**                       |
 
-| Command         | Description                            |
-|----------------|----------------------------------------|
-| `/status`       | Show router uptime, CPU and memory info |
-| `/devices`      | List connected devices (known & unknown) |
-| `/block XX:XX:XX:XX:XX:XX` | Block internet for a device |
-| `/unblock XX:XX:XX:XX:XX:XX` | Unblock internet for a device |
-| `/reboot`       | Reboot the router                      |
-| `/rebootwan`    | Restart WAN interface                  |
+## 📢 Auto Alerts
 
-> Note: Only users listed in `ALLOWED_USERS` can use the bot.
+The bot checks for unknown devices every 5 minutes and notifies authorized users if any are online.
 
----
+## 📝 License
 
-## 📢 Auto Notifications
-
-The bot checks `/tmp/dhcp.leases` every 5 minutes and sends Telegram alerts if any new unknown devices are found on the network.
+MIT License
