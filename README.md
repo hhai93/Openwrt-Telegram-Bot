@@ -32,12 +32,39 @@ ALLOWED_USERS = [123456789]  # Telegram user IDs allowed to use the bot
 ```
 
 2. Run the bot:
-
+-  Create init script
 ```bash
-python router_bot.py
+touch /etc/init.d/router_bot
+chmod +x /etc/init.d/router_bot
+```
+- Edit script:
+```bash
+vi /etc/init.d/router_bot
+```
+Then paste the followings:
+```bash
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=10
+
+start() {
+    echo "Starting Router bot..."
+    python3 /PATH/router_bot.py >> /root/bot.log 2>&1 &
+}
+
+stop() {
+    echo "Stopping Router bot..."
+    killall -9 python3
+}
+```
+- Enable and start the bot
+```bash
+/etc/init.d/router_bot enable
+/etc/init.d/router_bot start
 ```
 
-The bot needs access to system commands (`iptables`, `ping`, `wifi`, etc.), so make sure it's run with appropriate privileges.
+*The bot needs access to system commands (`iptables`, `ping`, `wifi`, etc.), so make sure it's run with appropriate privileges.*
 
 ---
 
