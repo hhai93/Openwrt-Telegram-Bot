@@ -3,15 +3,15 @@ from telegram import Update, BotCommand
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import subprocess
 import requests
+import asyncio
 import re
 import json
 import os
 from functools import wraps
-import asyncio
 
 # ================= CONFIGURATION =================
-TOKEN = [YOUR BOT TOKEN]
-ALLOWED_USERS = [YOUR USER ID]
+TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+ALLOWED_USERS = "YOUR_TELEGRAM_USER_ID"
 MAC_VENDOR_API = "https://api.macvendors.com/"
 CACHE_FILE = "mac_vendor_cache.json"
 
