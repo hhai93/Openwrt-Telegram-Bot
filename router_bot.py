@@ -137,28 +137,6 @@ async def devices(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(message, parse_mode="Markdown")
 
 @is_authorized
-async def wifi_on(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    result = execute_command(["uci", "set", "wireless.radio0.disabled=0"])
-    if "Error" not in result:
-        result += "\n" + execute_command(["uci", "commit", "wireless"])
-        result += "\n" + execute_command(["wifi", "reload"])
-    if "Error" in result:
-        await update.message.reply_text(f"❌ Failed to turn WiFi ON: {result}")
-    else:
-        await update.message.reply_text("✅ WiFi turned ON successfully.")
-
-@is_authorized
-async def wifi_off(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    result = execute_command(["uci", "set", "wireless.radio0.disabled=1"])
-    if "Error" not in result:
-        result += "\n" + execute_command(["uci", "commit", "wireless"])
-        result += "\n" + execute_command(["wifi", "reload"])
-    if "Error" in result:
-        await update.message.reply_text(f"❌ Failed to turn WiFi OFF: {result}")
-    else:
-        await update.message.reply_text("✅ WiFi turned OFF successfully.")
-
-@is_authorized
 async def manage_block(update: Update, context: ContextTypes.DEFAULT_TYPE, block=True):
     if len(context.args) != 1 or not is_valid_mac(context.args[0]):
         action = "block" if block else "unblock"
@@ -199,6 +177,28 @@ async def reboot_wan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"❌ Failed to reboot WAN: {result}")
 
 @is_authorized
+async def wifi_on(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    result = execute_command(["uci", "set", "wireless.radio0.disabled=0"])
+    if "Error" not in result:
+        result += "\n" + execute_command(["uci", "commit", "wireless"])
+        result += "\n" + execute_command(["wifi", "reload"])
+    if "Error" in result:
+        await update.message.reply_text(f"❌ Failed to turn WiFi ON: {result}")
+    else:
+        await update.message.reply_text("✅ WiFi turned ON successfully.")
+
+@is_authorized
+async def wifi_off(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    result = execute_command(["uci", "set", "wireless.radio0.disabled=1"])
+    if "Error" not in result:
+        result += "\n" + execute_command(["uci", "commit", "wireless"])
+        result += "\n" + execute_command(["wifi", "reload"])
+    if "Error" in result:
+        await update.message.reply_text(f"❌ Failed to turn WiFi OFF: {result}")
+    else:
+        await update.message.reply_text("✅ WiFi turned OFF successfully.")
+
+@is_authorized
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     help_text = """
 📚 *Command List:*
@@ -207,7 +207,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 /block <MAC> - Block a device by MAC
 /unblock <MAC> - Unblock a device by MAC
 /reboot - Reboot the router
-/rebootwan - Reboot WAN connection
+/reboot_wan - Reboot WAN connection
 /wifi_on - Turn WiFi on
 /wifi_off - Turn WiFi off
 /help - Show this command list
@@ -277,12 +277,12 @@ async def main():
 
     app.add_handler(CommandHandler("status", status))
     app.add_handler(CommandHandler("devices", devices))
-    app.add_handler(CommandHandler("wifi_on", wifi_on))
-    app.add_handler(CommandHandler("wifi_off", wifi_off))
     app.add_handler(CommandHandler("block", block))
     app.add_handler(CommandHandler("unblock", unblock))
     app.add_handler(CommandHandler("reboot", reboot))
-    app.add_handler(CommandHandler("rebootwan", reboot_wan))
+    app.add_handler(CommandHandler("reboot_wan", reboot_wan))
+    app.add_handler(CommandHandler("wifi_on", wifi_on))
+    app.add_handler(CommandHandler("wifi_off", wifi_off))
     app.add_handler(CommandHandler("help", help_command))
 
     setup_auto_check(app)
