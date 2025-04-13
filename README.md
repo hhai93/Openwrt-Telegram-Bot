@@ -19,10 +19,13 @@ A lightweight Telegram bot to remotely monitor and control your OpenWRT-based ro
 
 ## 📦 Requirements
 
-- Python 3.9+
-- `python-telegram-bot >= 20.0`
-- `requests`, `nest_asyncio`
+- `python3`
+- `python-telegram-bot`
+- `requests`
+- `nest_asyncio`
+
 ---
+
 ## 🛠️ Setup
 
 1. Edit the following variables in the script:
