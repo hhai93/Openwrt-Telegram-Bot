@@ -9,11 +9,11 @@ A lightweight Telegram bot to remotely monitor and control your OpenWRT-based ro
 ## 🚀 Features
 
 - 📡 List connected devices (with MAC Vendor lookup)
-- 🧠 Show CPU, memory, and uptime stats
+- 🧠 Show CPU, memory, WAN IP and uptime
 - 🚫 Block or unblock internet access by MAC address
 - 🔁 Reboot router or restart WAN connection
 - 📶 Turn Wi-Fi on or off
-- ⚠️ Auto alert when unknown devices connect
+- ⚠️ Auto alert when unknown devices connect (Not yet listed in DHCP/static leases)
 
 ---
 
@@ -84,11 +84,11 @@ stop() {
 | `/status`      | Show router status                       |
 | `/devices`     | List connected devices                   |
 | `/block <MAC>` | Block internet access by MAC             |
-| `/unblock <MAC>` | Unblock internet access                |
+| `/unblock <MAC>` | Unblock internet access by MAC         |
 | `/reboot`      | Reboot the router                        |
-| `/reboot_wan`   | Restart WAN connection                   |
-| `/wifi_on`      | Turn Wi-Fi **on**                        |
-| `/wifi_off`     | Turn Wi-Fi **off**                       |
+| `/reboot_wan`   | Restart WAN connection                  |
+| `/wifi_on`      | Turn Wi-Fi **on**                       |
+| `/wifi_off`     | Turn Wi-Fi **off**                      |
 
 ---
 
