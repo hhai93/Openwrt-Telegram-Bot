@@ -23,7 +23,14 @@ A lightweight Telegram bot to remotely monitor and control your OpenWRT-based ro
 - `python-telegram-bot`
 - `requests`
 - `nest_asyncio`
-
+```bash
+opkg update
+opkg install python3
+opkg install python3-pip
+pip install python-telegram-bot
+pip install requests
+pip install nest_asyncio
+```
 ---
 
 ## 🛠️ Setup
