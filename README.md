@@ -19,17 +19,16 @@ A lightweight Telegram bot to remotely monitor and control your OpenWRT-based ro
 
 ## 📦 Requirements
 
-- `python3`
-- `python-telegram-bot`
-- `requests`
-- `nest_asyncio`
+`python3`, `python-telegram-bot`, `python-telegram-bot[job-queue]`, `requests`, `asyncio`
+
 ```bash
 opkg update
 opkg install python3
 opkg install python3-pip
 pip install python-telegram-bot
+pip install python-telegram-bot[job-queue]
 pip install requests
-pip install nest_asyncio
+pip install asyncio
 ```
 ---
 
@@ -38,7 +37,7 @@ pip install nest_asyncio
 1. Edit the following variables in the script:
 ```python
 TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
-ALLOWED_USERS = [123456789]  # Telegram user IDs allowed to use the bot
+ALLOWED_USERS = "YOUR_TELEGRAM_USER_ID"
 ```
 
 2. Run the bot:
@@ -87,9 +86,9 @@ stop() {
 | `/block <MAC>` | Block internet access by MAC             |
 | `/unblock <MAC>` | Unblock internet access                |
 | `/reboot`      | Reboot the router                        |
-| `/rebootwan`   | Restart WAN connection                   |
-| `/wifion`      | Turn Wi-Fi **on**                        |
-| `/wifioff`     | Turn Wi-Fi **off**                       |
+| `/reboot_wan`   | Restart WAN connection                   |
+| `/wifi_on`      | Turn Wi-Fi **on**                        |
+| `/wifi_off`     | Turn Wi-Fi **off**                       |
 
 ---
 
