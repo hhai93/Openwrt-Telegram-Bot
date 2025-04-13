@@ -79,6 +79,19 @@ def is_device_online(ip):
     logger.info(f"Ping {ip}: {result}")
     return "1 packets received" in result
 
+def get_wan_ip():
+    wan_ip = execute_command(["uci", "get", "network.wan.ipaddr"])
+    if wan_ip and "Error" not in wan_ip:
+        return wan_ip
+    
+    ip_output = execute_command(["ip", "addr", "show", "wan"])
+    if ip_output and "Error" not in ip_output:
+        match = re.search(r"inet (\d+\.\d+\.\d+\.\d+)/", ip_output)
+        if match:
+            return match.group(1)
+    
+    return "Unable to retrieve"
+
 # ================= BOT COMMANDS =================
 @is_authorized
 async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -90,13 +103,21 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mem_info = execute_command(["awk", "/MemTotal:/ {total=$2} /MemAvailable:/ {available=$2} END {print total, available}", "/proc/meminfo"])
     mem_total, mem_available = map(int, mem_info.split())
     mem_used = mem_total - mem_available
+    wan_ip = get_wan_ip()
+
+    # Định dạng bộ nhớ với dấu phân cách hàng nghìn nếu cần
+    mem_used_mb = mem_used / 1024
+    mem_total_mb = mem_total / 1024
+    mem_used_str = f"{mem_used_mb:,.2f}" if mem_used_mb >= 1000 else f"{mem_used_mb:.2f}"
+    mem_total_str = f"{mem_total_mb:,.2f}" if mem_total_mb >= 1000 else f"{mem_total_mb:.2f}"
 
     message = f"""
 📊 *Router Status:*
 
 🕒 *Uptime:* {uptime}
-💾 *Memory:* {mem_used / 1024:.2f} MB / {mem_total / 1024:.2f} MB
+💾 *Memory:* {mem_used_str} MB / {mem_total_str} MB
 ⚙️ *CPU:* {cpu_usage:.2f}% used
+🌐 *WAN IP:* {wan_ip}
 """
     await update.message.reply_text(message, parse_mode="Markdown")
 
