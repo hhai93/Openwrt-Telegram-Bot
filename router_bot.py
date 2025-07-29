@@ -80,17 +80,14 @@ def is_device_online(ip):
     return "1 packets received" in result
 
 def get_wan_ip():
-    wan_ip = execute_command(["uci", "get", "network.wan.ipaddr"])
-    if wan_ip and "Error" not in wan_ip:
-        return wan_ip
-    
-    ip_output = execute_command(["ip", "addr", "show", "wan"])
-    if ip_output and "Error" not in ip_output:
+    iface = execute_command(["uci", "get", "network.wan.ifname"])
+    if iface:
+        ip_output = execute_command(["ip", "addr", "show", iface])
         match = re.search(r"inet (\d+\.\d+\.\d+\.\d+)/", ip_output)
         if match:
             return match.group(1)
-    
-    return "Unable to retrieve"
+    wan_ip = execute_command(["uclient-fetch", "-qO", "-", "https://api.ipify.org"])
+    return wan_ip if wan_ip else "Unable to retrieve"
 
 # ================= BOT COMMANDS =================
 @is_authorized
@@ -104,8 +101,6 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mem_total, mem_available = map(int, mem_info.split())
     mem_used = mem_total - mem_available
     wan_ip = get_wan_ip()
-
-    # Định dạng bộ nhớ với dấu phân cách hàng nghìn nếu cần
     mem_used_mb = mem_used / 1024
     mem_total_mb = mem_total / 1024
     mem_used_str = f"{mem_used_mb:,.2f}" if mem_used_mb >= 1000 else f"{mem_used_mb:.2f}"
