@@ -58,12 +58,12 @@ START=99
 STOP=10
 
 start() {
-    echo "Starting Router bot..."
-    python3 /PATH/router_bot.py >> /root/bot.log 2>&1 &
+    echo "Starting Telegram Bot"
+    /usr/bin/python3 /etc/bot/router_bot.py &
 }
 
 stop() {
-    echo "Stopping Router bot..."
+    echo "Stopping Telegram Bot"
     killall -9 python3
 }
 ```
