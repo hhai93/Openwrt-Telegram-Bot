@@ -285,7 +285,7 @@ async def main():
         BotCommand("block", "Block a device by MAC"),
         BotCommand("unblock", "Unblock a device by MAC"),
         BotCommand("reboot", "Reboot the router"),
-        BotCommand("rebootwan", "Reboot WAN connection"),
+        BotCommand("reboot_wan", "Reboot WAN connection"),
         BotCommand("wifi_on", "Turn WiFi on"),
         BotCommand("wifi_off", "Turn WiFi off"),
         BotCommand("help", "Show command list"),
