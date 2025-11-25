@@ -11,7 +11,7 @@ from functools import wraps
 
 # ================= CONFIGURATION =================
 TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
-ALLOWED_USERS = "YOUR_TELEGRAM_USER_ID"
+ALLOWED_USERS = [YOUR_TELEGRAM_USER_ID]
 MAC_VENDOR_API = "https://api.macvendors.com/"
 CACHE_FILE = "mac_vendor_cache.json"
 
